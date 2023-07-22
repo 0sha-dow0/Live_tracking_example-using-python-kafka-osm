@@ -1,7 +1,7 @@
 import kafka_connection
 import json
 import uuid
-
+from time import sleep
 
 def bus_2_producer():
     # dummy data to replicate the data flow
@@ -10,7 +10,7 @@ def bus_2_producer():
     coordinate_data = data_decode['features'][0]['geometry']['coordinates']
 
     data = {}
-    data['bus_line_no'] = '2'
+    data['bus_line_no'] = 2
     data["id"] = str(uuid.uuid4())
     i = 0
     while i <= len(coordinate_data):
@@ -18,8 +18,8 @@ def bus_2_producer():
         data['long'] = coordinate_data[i][1]
         i = i + 1
         message = json.dumps(data)
+        sleep(2)
         kafka_connection.producing_message(message)
-        print(message)
         if i == len(coordinate_data):
             i = 0
 

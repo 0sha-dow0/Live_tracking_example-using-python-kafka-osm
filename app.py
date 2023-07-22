@@ -1,21 +1,23 @@
 from flask import Flask,Response
 from pykafka import KafkaClient
+from flask_cors import CORS
 
 
 consumer_client=KafkaClient(hosts="localhost:9092")
-topic = consumer_client.topics["testing"]
+topic = consumer_client.topics["test123"]
 consumer = topic.get_simple_consumer()
 
 
 app = Flask(__name__)
+CORS(app)
 
 
-
-@app.route('/')
+@app.route('/home')
 def index():
     def event():
         for i in consumer:
-            yield 'data{0}:\n\n'.format(i.value.decode())
+            print(type(i.value.decode()))
+            yield 'data: {0}\n\nevent: kafka\n\n'.format(i.value.decode())
 
 
     return Response(event(),mimetype="text/event-stream")
