@@ -14,41 +14,43 @@ L.tileLayer('http://192.168.1.11/tile/{z}/{x}/{y}.png', {
 
 // show the scale bar on the lower left corner
 L.control.scale({imperial: true, metric: true}).addTo(map);
-// const markers = [
-//     L.marker([kafkaLatitude,kafkaLongitude]).bindPopup("marker1").addTo(map),
-//     L.marker([kafkaLatitude+1,kafkaLongitude+1]).bindPopup("marker2").addTo(map),
-//     L.marker([kafkaLatitude+2,kafkaLongitude+2]).bindPopup("marker3").addTo(map),
-// ]
+const markers = [
+    L.marker([kafkaLatitude,kafkaLongitude]).bindPopup("marker1"),
+    L.marker([kafkaLatitude+1,kafkaLongitude+1]).bindPopup("marker2"),
+    L.marker([kafkaLatitude+2,kafkaLongitude+2]).bindPopup("marker3"),
+]
 
-const markers =[]
-for (i=0; i <3;i++){
-    const marker = L.marker([kafkaLatitude+i,kafkaLongitude+i]).addTo(map)
-    markers.push(marker)
+for (var i =0; i <3; i++){
+    markers[i].addTo(map)
 }
-myEvent.addEventListener("message",(e)=>{
+myEvent.addEventListener("message",async (e)=>{
     data =JSON.parse(e.data)
     try{
         
         console.log("happening",data)
         const{bus_line_no,lat,long}=data
         // marker[bus_line_no].setLatLng([lat,long])
-         if(bus_line_no ==1){
+         if(bus_line_no == 1){
+            console.log("processing bus line 1 ",)
             kafkaLatitude = lat
             kafkaLongitude = long
-            markers[0].setLatLng([kafkaLatitude,kafkaLongitude])
+            // updateLatLong(0,kafkaLatitude,kafkaLongitude)
+            await markers[0].setLatLng([kafkaLatitude,kafkaLongitude])
             //  L.marker([kafkaLatitude,kafkaLongitude]).bindPopup("marker1").addTo(map)
         }
         if(bus_line_no==2){
             kafkaLatitude = lat
             kafkaLongitude = long
-            markers[1].setLatLng([kafkaLatitude,kafkaLongitude])
+            // updateLatLong(0,kafkaLatitude,kafkaLongitude)
+            await markers[1].setLatLng([kafkaLatitude,kafkaLongitude])
             // L.marker([kafkaLatitude,kafkaLongitude]).bindPopup("marker2").addTo(map)
 
         }
         if(bus_line_no==3){
             kafkaLatitude = lat
             kafkaLongitude = long
-            markers[2].setLatLng([kafkaLatitude,kafkaLongitude])
+            // updateLatLong(0,kafkaLatitude,kafkaLongitude)
+           await  markers[2].setLatLng([kafkaLatitude,kafkaLongitude])
             // L.marker([kafkaLatitude,kafkaLongitude]).bindPopup("marker3").addTo(map)
             
         }
