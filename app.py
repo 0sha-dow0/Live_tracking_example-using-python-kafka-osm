@@ -16,7 +16,6 @@ CORS(app)
 def index():
     def event():
         for i in consumer:
-            print(type(i.value.decode()))
             yield 'data: {0}\n\nevent: kafka\n\n'.format(i.value.decode())
 
 

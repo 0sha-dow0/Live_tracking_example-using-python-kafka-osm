@@ -1,5 +1,10 @@
 ﻿# Live_tracking_example-using-python-kafka-osm
 
+## DEMO
+![DEMO](demo.gif)
+
+
+
 ## First Install Kafka 
 1. You Will need to install java(64 bit)
 2. After installing extract and install
@@ -40,6 +45,8 @@
 >kafka-console-consumer.bat --topic testfinal --bootstrap-server localhost:9092 --from-beginning
 
 16.Creates a consumer
+
+
 
 
         
